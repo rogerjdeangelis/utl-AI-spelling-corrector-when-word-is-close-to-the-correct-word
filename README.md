@@ -70,5 +70,67 @@ AI Spelling corrector when word is close to the correct word
     pyperclip.copy(output);                                                                                                                      
     ",return=fromPy);                                                                                                                            
                                                                                                                                                  
-    %put &=frompy;                                                                                                                               
+    %put &=frompy;   
+    
+    
+        
+    "DID YOU MEAN" FROM GOOGLE  (SAME AS ABOVE)                                                                                                             
+                                                                                                                                             
+    %symdel name frompy / nowarn;                                                                                                            
+                                                                                                                                             
+    %let name=DERMATITUS;                                                                                                                    
+                                                                                                                                             
+    %let name=RogerjDangelis;                                                                                                                
+                                                                                                                                             
+    %utl_submit_py64_38("                                                                                                                    
+    import io;                                                                                                                               
+    import pyperclip;                                                                                                                        
+    import requests;                                                                                                                         
+    from bs4 import BeautifulSoup;                                                                                                           
+    q='&name';                                                                                                                               
+    parameters = {'q': q, 'hl': 'en'};                                                                                                       
+    headers ={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'}; 
+    url = 'http://www.google.com/search';                                                                                                    
+    html = requests.get(url, params=parameters, headers=headers).text;                                                                       
+    soup = BeautifulSoup(html, 'html.parser');                                                                                               
+    did_you_mean = soup.select_one('span:contains(""Did you mean:"")');                                                                      
+    output = io.StringIO();                                                                                                                  
+    print(did_you_mean.find_next('i').text,file=output,end='');                                                                              
+    output = output.getvalue();                                                                                                              
+    print(output);                                                                                                                           
+    pyperclip.copy(output);                                                                                                                  
+    ",return=fromPy);                                                                                                                        
+                                                                                                                                             
+    %put &=frompy;                                                                                                                           
+                                                                                                                                             
+                                                                                                                                             
+    "SHOWING RESULTS FROM" GOOGLE                                                                                                            
+                                                                                                                                             
+    %symdel name frompy / nowarn;                                                                                                            
+                                                                                                                                             
+    %let name=DERMATITUS;                                                                                                                    
+                                                                                                                                             
+    %utl_submit_py64_38("                                                                                                                    
+    import io;                                                                                                                               
+    import pyperclip;                                                                                                                        
+    import requests;                                                                                                                         
+    from bs4 import BeautifulSoup;                                                                                                           
+    q='&name';                                                                                                                               
+    parameters = {'q': q, 'hl': 'en'};                                                                                                       
+    headers ={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'}; 
+    url = 'http://www.google.com/search';                                                                                                    
+    html = requests.get(url, params=parameters, headers=headers).text;                                                                       
+    soup = BeautifulSoup(html, 'html.parser');                                                                                               
+    did_you_mean = soup.select_one('span:contains(""Showing results for"")');                                                                
+    print(did_you_mean);                                                                                                                     
+    output = io.StringIO();                                                                                                                  
+    print(did_you_mean.find_next('i').text,file=output,end='');                                                                              
+    output = output.getvalue();                                                                                                              
+    print(output);                                                                                                                           
+    pyperclip.copy(output);                                                                                                                  
+    ",return=fromPy);                                                                                                                        
+                                                                                                                                             
+    %put &=frompy;                                                                                                                           
+                                                                                                                                             
+
                                                                                                                                                  
